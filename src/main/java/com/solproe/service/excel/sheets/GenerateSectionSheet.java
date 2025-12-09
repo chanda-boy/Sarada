@@ -376,7 +376,7 @@ public class GenerateSectionSheet {
             Row header = sheet.createRow(row);
             header.setHeight((short) 700);
             createCellsRow(sheet, 0, 8, header);
-            header.getCell(1).setCellValue("FECHA DE LECTURA ANOMALA");
+            header.getCell(1).setCellValue("LECTURA ANÓMALA");
             this.styleFactory.applyStyleBorder(true, true, 2, header.getCell(1), true, true);
             sheet.addMergedRegion(new CellRangeAddress(header.getRowNum(), header.getRowNum(), 1, 2));
             header.getCell(3).setCellValue("NIVEL DE ALERTA");
@@ -671,9 +671,13 @@ public class GenerateSectionSheet {
             this.styleFactory.applyStyleBorder(true, true, 2, sheet.getRow(startRow).getCell(0), true, true);
             CellStyle styleC = this.workbook.createCellStyle();
             styleC.setVerticalAlignment(VerticalAlignment.CENTER);
-            styleC.setBorderBottom(BorderStyle.MEDIUM);
             styleC.setBorderTop(BorderStyle.MEDIUM);
             sheet.getRow(startRow).getCell(0).setCellStyle(styleC);
+            sheet.createRow(startRow + count.get());
+            CellStyle zzz = this.workbook.createCellStyle();
+            zzz.setBorderTop(BorderStyle.MEDIUM);
+            sheet.getRow(startRow + count.get()).createCell(0).setCellStyle(zzz);
+            sheet.getRow(startRow + count.get()).createCell(1).setCellStyle(zzz);
         }
         return startRow + count.get();
     }
@@ -712,24 +716,21 @@ public class GenerateSectionSheet {
         String[] alert = new String[0];
         if (model.getReportType() == TypeReportSheet.forestFireDataModel) {
             notification = new String[] {
-                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o " +
-                            "Auxiliar del Comandante de Incidentes al número telefónico indicando nivel de alerta Naranja",
-                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o " +
-                            "Auxiliar del Comandante de Incidentes al número telefónico indicando nivel de alerta Roja" +
-                            " y activación de mecanismos de alarma",
-                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o " +
-                            "Auxiliar del Comandante de Incidentes al número telefónico:",
-                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área" +
-                            " y/o Auxiliar del Comandante de Incidentes al número telefónico:",
+                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o Auxiliar del Comandante de Incidentes" +
+                            " al número telefónico indicando nivel de alerta Naranja ",
+                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o Auxiliar del Comandante de " +
+                            "Incidentes al número telefónico indicando nivel de alerta Roja y activación de mecanismos de alarma",
+                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o Auxiliar del Comandante de Incidentes al número telefónico:",
+                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o Auxiliar del Comandante de Incidentes al número telefónico:",
             };
 
             message = new String[] {
-                    "ACTIVACIÓN DE BRIGADAS DE EMERGENCIA DE ALERTA POR INCENDIO FORESTAL",
-                    "ACTIVAR EN PREVENTIVO EL PMU Y ALISTAMIENTO DE BRIGADAS DE EMERGENCIAS (EQUIPOS LISTOS" +
-                            " PARA REACCIÓN INMEDIATA) ALERTA ROJA POR INCENDIO FORESTAL",
-                    "ACTIVACIÓN DE BRIGADAS DE EMERGENCIA POR ALERTA NARANJA FRENTE A INCENDIOS FORESTALES",
-                    "ACTIVAR EN PREVENTIVO EL PMU Y ALISTAMIENTO DE BRIGADAS DE EMERGENCIAS (EQUIPOS LISTOS PARA " +
-                            "REACCIÓN INMEDIATA) ALERTA ROJA POR INCENDIO FORESTAL",
+                    "ALISTAMIENTO DE BRIGADAS PARA LA ATENCIÓN DE EMERGENCIAS POR ALERTA NARANJA DE INCENDIO FORESTAL",
+                    "ACTIVACIÓN DE CADENAS DE LLAMADO, ORDENAR LA VERIFICACIÓN DE OCURRENCIA DEL EVENTO Y DAR INICIO A LAS ACCIONES DE RESPUESTA " +
+                            "INMEDIATA  POR ALERTA ROJA DE INCENDIO FORESTAL. SI EL EVENTO ES DE GRAN MAGNITUD SOLICITAR LA INSTALACIÓN DE PMU.",
+                    "ALISTAMIENTO DE BRIGADAS PARA LA ATENCIÓN DE EMERGENCIAS POR ALERTA NARANJA DE INCENDIO FORESTAL",
+                    "ACTIVACIÓN DE CADENAS DE LLAMADO, ORDENAR LA VERIFICACIÓN DE OCURRENCIA DEL EVENTO Y DAR INICIO A LAS ACCIONES DE RESPUESTA INMEDIATA  POR ALERTA ROJA DE INCENDIO FORESTAL." +
+                            " SI EL EVENTO ES DE GRAN MAGNITUD SOLICITAR LA INSTALACIÓN DE PMU.",
             };
 
             alert = new String[] {
@@ -741,24 +742,22 @@ public class GenerateSectionSheet {
         }
         else if (model.getReportType() == TypeReportSheet.massMovementDataModel) {
             notification = new String[] {
-                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o " +
-                            "Auxiliar del Comandante de Incidentes al número telefónico indicando nivel de alerta Naranja",
-                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o " +
-                            "Auxiliar del Comandante de Incidentes al número telefónico indicando nivel de alerta" +
-                            " Roja y activación de mecanismos de alarma",
-                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o " +
-                            "Auxiliar del Comandante de Incidentes al número telefónico:",
-                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o " +
-                            "Auxiliar del Comandante de Incidentes al número telefónico:",
+                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o Auxiliar del Comandante de " +
+                            "Incidentes al número telefónico indicando nivel de alerta Naranja ",
+                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o" +
+                            " Auxiliar del Comandante de Incidentes al número telefónico indicando nivel de alerta Roja y activación de mecanismos de alarma",
+                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o Auxiliar" +
+                            " del Comandante de Incidentes al número telefónico:  ",
+                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o Auxiliar del Comandante de Incidentes al número telefónico:  ",
             };
 
             message = new String[] {
-                    "ACTIVACIÓN DE BRIGADAS DE EMERGENCIA DE ALERTA POR MOVIMIENTOS EN MASA",
-                    "ACTIVAR EN PREVENTIVO EL PMU Y ALISTAMIENTO DE BRIGADAS DE EMERGENCIAS (EQUIPOS LISTOS PARA " +
-                            "REACCIÓN INMEDIATA) ALERTA ROJA POR MOVIMIENTOS EN MASA",
-                    "ACTIVACIÓN DE BRIGADAS DE EMERGENCIA POR ALERTA NARANJA FRENTE A MOVIMIENTOS EN MASA",
-                    "ACTIVAR EN PREVENTIVO EL PMU Y ALISTAMIENTO DE BRIGADAS DE EMERGENCIAS (EQUIPOS LISTOS PARA " +
-                            "REACCIÓN INMEDIATA) ALERTA ROJA POR MOVIMIENTOS EN MASA",
+                    "ALISTAMIENTO DE BRIGADAS PARA LA ATENCIÓN DE EMERGENCIAS POR ALERTA NARANJA DE MOVIMIENTOS EN MASA",
+                    "ACTIVACIÓN DE CADENAS DE LLAMADO, ORDENAR LA VERIFICACIÓN DE OCURRENCIA DEL EVENTO Y DAR INICIO A LAS" +
+                            " ACCIONES DE RESPUESTA INMEDIATA  POR ALERTA ROJA DE MOVIMIENTOS EN MASA. SI EL EVENTO ES DE GRAN MAGNITUD SOLICITAR LA INSTALACIÓN DE PMU.",
+                    "ALISTAMIENTO DE BRIGADAS PARA LA ATENCIÓN DE EMERGENCIAS POR ALERTA NARANJA DE MOVIMIENTOS EN MASA",
+                    "ACTIVACIÓN DE CADENAS DE LLAMADO, ORDENAR LA VERIFICACIÓN DE OCURRENCIA DEL EVENTO Y DAR INICIO A LAS ACCIONES DE RESPUESTA INMEDIATA  " +
+                            "POR ALERTA ROJA DE MOVIMIENTOS EN MASA. SI EL EVENTO ES DE GRAN MAGNITUD SOLICITAR LA INSTALACIÓN DE PMU.",
             };
 
             alert = new String[] {
@@ -769,15 +768,21 @@ public class GenerateSectionSheet {
             };
         } else if (model.getReportType() == TypeReportSheet.rainShowerDataModel) {
             notification = new String[] {
-                    "ALERTA POR IDENTIFICACIÓN DE LECTURAS ANÓMALAS EN MONITOREO DIARIO PARA NIVEL DE ALERTA ROJA"
+                    "ALISTAMIENTO DE BRIGADAS PARA LA ATENCIÓN DE EMERGENCIAS POR ALERTA NARANJA DE VENDAVALES",
+                    "ACTIVACIÓN DE CADENAS DE LLAMADO, ORDENAR LA VERIFICACIÓN DE OCURRENCIA DEL EVENTO Y DAR INICIO A LAS ACCIONES DE RESPUESTA INMEDIATA  POR ALERTA ROJA DE VENDAVALES." +
+                            " SI EL EVENTO ES DE GRAN MAGNITUD SOLICITAR LA INSTALACIÓN DE PMU.",
             };
 
             message = new String[] {
-                    "ACTIVAR EN PREVENTIVO EL PMU Y ALISTAMIENTO DE BRIGADAS DE EMERGENCIAS (EQUIPOS LISTOS PARA REACCIÓN INMEDIATA) ALERTA ROJA POR FENÓMENOS CERÁUNICOS"
+                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o Auxiliar" +
+                        " del Comandante de Incidentes al número telefónico indicando nivel de alerta Naranja ",
+                    "Comunicar de manera inmediata al jefe del sistema de comando de incidentes y al Jefe de Área y/o Auxiliar del" +
+                            " Comandante de Incidentes al número telefónico indicando nivel de alerta Roja y activación de mecanismos de alarma",
             };
 
             alert = new String[] {
-                    "ALERTA POR IDENTIFICACIÓN DE LECTURAS ANÓMALAS EN MONITOREO DIARIO PARA NIVEL DE ALERTA ROJA\n"
+                    "ALERTA POR POR IDENTIFICACION DE LECTURAS ANÓMALAS EN MONITOREO DIARIO PARA NIVEL DE ALERTA NARANJA ",
+                    "ALERTA POR IDENTIFICACIÓN DE LECTURAS ANÓMALAS EN MONITOREO DIARIO PARA NIVEL DE ALERTA ROJA",
             };
         } else if (model.getReportType() == TypeReportSheet.ceraunic) {
             notification = new String[] {
@@ -785,7 +790,7 @@ public class GenerateSectionSheet {
             };
 
             message = new String[] {
-                    "ACTIVAR EN PREVENTIVO EL PMU Y ALISTAMIENTO DE BRIGADAS DE EMERGENCIAS (EQUIPOS LISTOS PARA REACCIÓN INMEDIATA) ALERTA ROJA POR FENÓMENOS CERÁUNICOS"
+                    "ACTIVAR EN PREVENTIVO EL PMU Y FENÓMENOS CERÁUNICOS"
             };
 
             alert = new String[] {
