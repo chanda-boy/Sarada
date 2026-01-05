@@ -20,7 +20,7 @@ public class WhatsappBusinessService implements WhatsappService {
 
     @Override
     public void sendMessage() {
-        String contact = "+57" + this.jsonObject.get("sciBossContact").getAsString();
+        String contact = "57" + this.jsonObject.get("sciBossContact").getAsString();
         HttpClient client = HttpClient.newHttpClient();
         String header = "";
         String action = "";
@@ -122,6 +122,7 @@ public class WhatsappBusinessService implements WhatsappService {
     @Override
     public void setToken(String token) {
         this.token = token;
+        System.out.println("whatsapp token:" + token);
     }
 
     @Override

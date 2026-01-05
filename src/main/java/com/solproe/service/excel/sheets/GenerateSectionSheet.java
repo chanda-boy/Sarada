@@ -790,7 +790,7 @@ public class GenerateSectionSheet {
             };
 
             message = new String[] {
-                    "ACTIVAR EN PREVENTIVO EL PMU Y FENÓMENOS CERÁUNICOS"
+                    "ACTIVAR EN PREVENTIVO EL PMU Y ALISTAMIENTO DE BRIGADAS DE EMERGENCIAS (EQUIPOS LISTOS PARA REACCIÓN INMEDIATA) ALERTA ROJA POR FENÓMENOS CERÁUNICOS"
             };
 
             alert = new String[] {
