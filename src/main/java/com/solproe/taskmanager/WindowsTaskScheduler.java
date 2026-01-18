@@ -23,12 +23,18 @@ public class WindowsTaskScheduler implements TaskScheduler {
 
         String fullCommand = "\\\"C:\\Program Files\\Sarada\\Sarada.exe\\\" --auto";
 
+        String formattedTime = time;
+        if (time.contains(":") && time.split(":")[1].length() == 1) {
+            String[] parts = time.split(":");
+            formattedTime = String.format("%02d:%02d", Integer.parseInt(parts[0]), Integer.parseInt(    parts[1]));
+        }
+
         String[] schtasksCommand = {
                 "schtasks", "/create",
                 "/tn", taskName,
                 "/tr", fullCommand,
                 "/sc", schedule, // Ej: DAILY, HOURLY
-                "/st", time,     // Ej: 09:00
+                "/st", formattedTime,     // Ej: 09:00
                 "/sd", "28/10/2025", // Fecha de inicio fija, podrías hacer la dinámica
                 "/f", // Forzar la creación (sobrescribe si existe)
                 "/rl", "HIGHEST" // Ejecutar con los privilegios más altos

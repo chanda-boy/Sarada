@@ -56,12 +56,21 @@ public class LogInitializer {
                 }
 
             } else if (!Files.isDirectory(logPath)) {
-                // Esto maneja el caso raro pero posible de que la ruta exista pero sea un archivo y no un directorio
+                // Esto maneja el caso raro, pero posible de que la ruta exista, pero sea un archivo y no un directorio
                 System.err.println("Error: La ruta de logs existe pero no es un directorio: " + logPath.toAbsolutePath());
                 throw new IOException("La ruta de logs especificada no es un directorio.");
             } else {
                 System.out.println("El directorio de logs ya existe: " + logPath.toAbsolutePath());
             }
+
+            Path record = Paths.get(logPath.toUri());
+            record = record.resolve("recordThreshold.json");
+            if (!Files.exists(record)) {
+                JsonConfigFileGenerator jsonConfigFileGenerator = new JsonConfigFileGenerator();
+                JsonObject jsonObject = new JsonObject();
+                jsonConfigFileGenerator.generate(jsonObject, record);
+            }
+
         } catch (IOException e) {
             System.err.println("Excepción al crear o verificar el directorio de logs: " + e.getMessage());
             // Si hay un error de IO (ej. permisos), la aplicación podría no funcionar correctamente.

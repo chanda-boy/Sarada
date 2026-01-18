@@ -79,7 +79,7 @@
             <TextField fx:id="yellowThresholdPrecipitation" GridPane.rowIndex="18" GridPane.columnIndex="2"
                        styleClass="data-field"/>
 
-            <Button text="Guarder" fx:id="buttonSave" styleClass="button-save" GridPane.rowIndex="19"
+            <Button text="Guardar" fx:id="buttonSave" styleClass="button-save" GridPane.rowIndex="19"
                         GridPane.columnIndex="2"/>
         </GridPane>
     </center>
