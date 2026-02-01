@@ -3,11 +3,12 @@ plugins {
     application
     id("org.openjfx.javafxplugin") version "0.0.13"
     id("org.beryx.jlink") version "3.1.1"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "com.solproe"
-version = "2.8.4"
-""
+version = "2.9.3"
+
 javafx {
     version = "21"
     modules = listOf("javafx.controls", "javafx.fxml", "javafx.base", "javafx.swing",
@@ -105,3 +106,4 @@ java {
     }
     modularity.inferModulePath.set(true)
 }
+

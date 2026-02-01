@@ -12,7 +12,6 @@ import com.solproe.service.excel.ExcelService;
 import com.solproe.service.excel.ReportExcelGenerator;
 import com.solproe.ui.viewModels.GenerateReportViewModel;
 import com.solproe.util.ThreadUtil;
-import com.solproe.util.logging.ErrorLogger;
 import com.solproe.util.logging.LogInitializer;
 import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;

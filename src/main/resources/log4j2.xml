@@ -6,7 +6,7 @@
         </Console>
 
         <RollingFile name="FileAppender"
-                     fileName="logs/app.log"
+                     fileName="app.log"
                      filePattern="logs/app-%d{yyyy-MM-dd}-%i.log.gz">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
             <Policies>

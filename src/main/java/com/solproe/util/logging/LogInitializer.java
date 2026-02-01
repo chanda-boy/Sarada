@@ -17,6 +17,24 @@ public class LogInitializer {
         if (os.toLowerCase().contains("win")) {
             String appdata = System.getProperty("user.home") + File.separator + "AppData" + File.separator + "Roaming";
             logPath = Paths.get(appdata, ".Sarada");
+            try {
+                ;
+                Files.createDirectory(logPath);
+                System.out.println("create directory: " + logPath);
+            } catch (IOException e) {
+                System.out.println("failed to create directory: -- " + e.getMessage());
+            }
+
+            Path record = Paths.get(logPath.toUri());
+            record = record.resolve("recordThreshold.json");
+            if (!Files.exists(record)) {
+                System.out.println("no existe el archivo------");
+                JsonConfigFileGenerator jsonConfigFileGenerator = new JsonConfigFileGenerator();
+                JsonObject jsonObject = new JsonObject();
+                jsonConfigFileGenerator.generate(jsonObject, record);
+            } else {
+                System.out.println("existe el archivo!!!!!");
+            }
         } else if (os.toLowerCase().contains("mac")) {
             String userHome = new OsInfo().getUserHome();
             logPath = Paths.get(userHome, "Library", "Application Support", ".Sarada");
@@ -24,8 +42,7 @@ public class LogInitializer {
             try {
                 String userHome = System.getProperty("user.home");
                 logPath = Paths.get(userHome, ".config", ".Sarada");
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 ErrorLogger.log(e);
             }
         }
@@ -50,8 +67,8 @@ public class LogInitializer {
                     JsonConfigFileGenerator jsonConfigFileGenerator = new JsonConfigFileGenerator();
                     JsonObject jsonObject = new JsonObject();
                     jsonConfigFileGenerator.generate(jsonObject, record);
-                }
-                catch (Exception e) {
+                    System.out.println("app.log created---");
+                } catch (Exception e) {
                     System.out.println("error to create " + e.getMessage());
                 }
 
@@ -63,14 +80,6 @@ public class LogInitializer {
                 System.out.println("El directorio de logs ya existe: " + logPath.toAbsolutePath());
             }
 
-            Path record = Paths.get(logPath.toUri());
-            record = record.resolve("recordThreshold.json");
-            if (!Files.exists(record)) {
-                JsonConfigFileGenerator jsonConfigFileGenerator = new JsonConfigFileGenerator();
-                JsonObject jsonObject = new JsonObject();
-                jsonConfigFileGenerator.generate(jsonObject, record);
-            }
-
         } catch (IOException e) {
             System.err.println("Excepción al crear o verificar el directorio de logs: " + e.getMessage());
             // Si hay un error de IO (ej. permisos), la aplicación podría no funcionar correctamente.
@@ -79,6 +88,5 @@ public class LogInitializer {
 
         // --- Establecer la propiedad del sistema ---
         // Ahora logPath está garantizado de no ser null si llegamos aquí
-
     }
 }

@@ -106,15 +106,16 @@ public class DashboardController implements Initializable {
         });
 
         this.buttonSave.setOnAction(_ -> {
-                    if (((int) hourSpinner.getValue() > 0 && (int) hourSpinner.getValue() <= 23) &&
-                            ((int) minuteSpinner.getValue() > 0 && (int) hourSpinner.getValue() <= 59)) {
+                    if (((int) hourSpinner.getValue() >= 0 && (int) hourSpinner.getValue() <= 23) &&
+                            ((int) minuteSpinner.getValue() >= 0 && (int) hourSpinner.getValue() <= 59)) {
                         viewModel.createConfigDash(new DashboardDto(tokenWhatsapp.getText(),
                                 hourSpinner.getValue().toString(),
                                 minuteSpinner.getValue().toString(),
                                 pathDirectory
                                 )
                         );
-                        showAlert(Alert.AlertType.CONFIRMATION, "Confirmado", "Se guardó la configuración exitosamente");
+                        showAlert(Alert.AlertType.CONFIRMATION, "Confirmado", "Se guardó la configuración exitosamente \n" +
+                                "se programó para la hora " + hourSpinner.getValue() + ":" + minuteSpinner.getValue());
                     }
                     else {
                         showAlert(Alert.AlertType.WARNING, "Error", "No se pudo guardar la configuración");
