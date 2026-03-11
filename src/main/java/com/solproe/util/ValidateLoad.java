@@ -32,10 +32,8 @@ public class ValidateLoad {
             ErrorLogger.log("another path: " + configDir, new Throwable());
         }
 
-        System.out.println(Files.exists(configDir) + " dirPath: " + configDir);
-
         configDir = configDir.resolve(this.fileName);
-
+        System.out.println("path validate: " + configDir);
         return Files.exists(configDir);
     }
 }

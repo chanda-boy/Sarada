@@ -31,6 +31,7 @@ public class CreateConfigFileUseCase implements RequestInterface {
 
     public void createConfigFile(Object object, ConfigPropertiesGeneratorInterface config) {
         try {
+            System.out.println("punto de pasar -- esta mierda me tiene mal --");
             if (!(object instanceof ConfigFileThreshold configFileThreshold)) {
                 throw new IllegalArgumentException("Unsupported object type");
             }
@@ -43,13 +44,14 @@ public class CreateConfigFileUseCase implements RequestInterface {
 
         } catch (Exception e) {
             ErrorLogger.log("class CreateConfigFileUseCase", e);
+            throw  new RuntimeException(e);
         }
     }
 
     public boolean createMonthlyConfigFile(MonthlyThresholdInputModel model, ConfigPropertiesGeneratorInterface config) {
         try {
             JsonObject jsonObject = buildMonthlyConfigFile(model);
-            return generateFile(jsonObject, config.getAppConfigPath());
+            return generateFile(jsonObject, config.getAppConfigPath(), 0);
         } catch (Exception e) {
             ErrorLogger.log(e);
             System.err.println("CreateConfigFileUseCase#createMonthlyConfigFile: " + e.getMessage());
@@ -60,7 +62,7 @@ public class CreateConfigFileUseCase implements RequestInterface {
     public boolean createCodeListConfig(ListCodeDTO dto, ConfigPropertiesGeneratorInterface config) {
         try {
             JsonObject jsonObject = buildCodeListConfig(dto);
-            return generateFile(jsonObject, config.getAppConfigPath());
+            return generateFile(jsonObject, config.getAppConfigPath(), 0);
 
         } catch (IllegalAccessException e) {
             System.err.println("CreateConfigFileUseCase#createCodeListConfig: " + e.getMessage());
@@ -133,13 +135,20 @@ public class CreateConfigFileUseCase implements RequestInterface {
         return json;
     }
 
-    private boolean generateFile(JsonObject jsonObject, Path path) {
+    private boolean generateFile(JsonObject jsonObject, Path path, int seq) {
         try {
-            this.configFileGenerator.generate(jsonObject, path);
-            return true;
+            System.out.println("path del file generando... " + path);
+            if (seq < 3) {
+                this.configFileGenerator.generate(jsonObject, path);
+                return true;
+            }
+            else {
+                return false;
+            }
         }
         catch (Exception e) {
             System.out.println("generate file exc: " + e.getMessage());
+            generateFile(jsonObject, path, seq + 1);
             return false;
         }
     }
@@ -159,7 +168,7 @@ public class CreateConfigFileUseCase implements RequestInterface {
         try {
             this.data.add("location", jsonObject.get("results").getAsJsonArray().get(0).getAsJsonObject()
                     .get("geometry").getAsJsonObject().get("location"));
-            generateFile(this.data, this.configPropertiesGeneratorInterface.getAppConfigPath());
+            generateFile(this.data, this.configPropertiesGeneratorInterface.getAppConfigPath(), 0);
         }
         catch (Exception e) {
             ErrorLogger.log("on succes class CreateConfigFileUseCase", e);
@@ -168,6 +177,6 @@ public class CreateConfigFileUseCase implements RequestInterface {
 
     public boolean createConfigDash(JsonObject object, ConfigPropertiesGeneratorInterface config) {
         System.out.println("UC create dash: " + object);
-        return generateFile(object, config.getAppConfigPath());
+        return generateFile(object, config.getAppConfigPath(), 0);
     }
 }

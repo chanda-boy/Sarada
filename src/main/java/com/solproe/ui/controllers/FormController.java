@@ -99,7 +99,6 @@ public class FormController implements Initializable {
 
             ErrorCallback errorCallback = t -> {
                 ErrorLogger.log(t);
-                System.out.println("error funcionando #######");
                 Platform.runLater(() -> {
                     showAlert(AlertType.ERROR, "Error",
                             "Hubo un problema al guardar el archivo de configuración: " + t.getMessage());

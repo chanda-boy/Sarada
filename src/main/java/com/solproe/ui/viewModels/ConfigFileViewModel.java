@@ -20,6 +20,7 @@ import com.solproe.service.config.ConfigPropertiesGenerator;
 import com.solproe.taskmanager.TaskScheduler;
 import com.solproe.taskmanager.TaskSchedulerFactory;
 import com.solproe.util.ValidateLoad;
+import com.solproe.util.logging.ErrorLogger;
 import org.jetbrains.annotations.NotNull;
 import java.io.FileNotFoundException;
 import java.util.concurrent.ExecutorService;
@@ -45,13 +46,16 @@ public class ConfigFileViewModel {
         };
         ConfigPropertiesGeneratorInterface configProperties = new ConfigPropertiesGenerator("threshold.json", dirName);
         ValidateLoad validateLoad = new ValidateLoad("app.log", ".Sarada");
+        ErrorLogger.create(new FileNotFoundException("init"));
         if (validateLoad.validateFirstRun()) {
+            System.out.println("create config");
             //new execution thread
             this.executor.submit(() -> {
                 try {
                     useCase.createConfigFile(config, configProperties);
                     successCallback.onSuccess();
                 } catch (Throwable e) {
+                    System.out.println("exception!!!!");
                     onFailure.onError(e);
                 }
             });

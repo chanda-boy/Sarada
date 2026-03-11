@@ -39,13 +39,14 @@ public class ConfigPropertiesGenerator implements ConfigPropertiesGeneratorInter
         try {
             String os = System.getProperty("os.name").toLowerCase();
             if (os.toLowerCase().contains("win")) {
-                System.out.println("so: " + os);
                 // Para Windows: C:\Users\<Username>\AppData\Roaming\<YourApp>
                 String appData = System.getenv("APPDATA");
                 if (appData == null) { // Fallback si APPDATA no está configurado (raro)
                     configDir = Paths.get(System.getProperty("user.home"), "AppData", "Roaming", this.appConfigDirName[0], this.appConfigDirName.length > 1 ? this.appConfigDirName[1] : "");
+                    System.out.println("path de config: " + configDir + " - " + this.fileName);
                 } else {
                     configDir = Paths.get(appData, this.appConfigDirName[0], this.appConfigDirName.length > 1 ? this.appConfigDirName[1] : "");
+                    System.out.println("path de config: " + configDir + " - " + this.fileName);
                 }
             } else if (os.toLowerCase().contains("nix") || os.toLowerCase().contains("nux") || os.toLowerCase().contains("aix")) {
                 // Para Linux/macOS: /home/<Username>/.config/<YourApp> o /home/<Username>/.<YourApp>
@@ -76,6 +77,7 @@ public class ConfigPropertiesGenerator implements ConfigPropertiesGeneratorInter
                     configDir = Paths.get(System.getProperty("user.home"), "AppData", "Roaming", this.appConfigDirName[0], this.appConfigDirName.length > 1 ? this.appConfigDirName[1] : "");
                 } else {
                     configDir = Paths.get(appData, this.appConfigDirName[0], this.appConfigDirName.length > 1 ? this.appConfigDirName[1] : "");
+                    System.out.println("path: " + configDir);
                 }
             } else if (os.contains("nix") || os.contains("nux") || os.contains("aix")) {
                 // Para Linux/macOS: /home/<Username>/.config/<YourApp> o /home/<Username>/.<YourApp>

@@ -34,7 +34,7 @@ public class ErrorLogger {
 
     }
 
-    private static void create(Throwable t, String... msg) {
+    public static void create(Throwable t, String... msg) {
         Path path = new ConfigPropertiesGenerator("app.log", ".Sarada").getAppConfigPath();
         File file = new File(path.toUri());
         if (Files.exists(path)) {
