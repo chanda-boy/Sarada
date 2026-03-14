@@ -23,7 +23,9 @@ public class ReportExcelGenerator implements ExcelFileGenerator {
     public ReportExcelGenerator(ExcelService excelService) {
         try {
             this.excelService = excelService;
+            System.out.println("point gen");
         } catch (Exception e) {
+            System.out.println("excccc: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }

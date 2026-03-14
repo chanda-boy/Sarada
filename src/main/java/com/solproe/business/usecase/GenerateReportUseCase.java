@@ -80,7 +80,11 @@ public class GenerateReportUseCase implements RequestInterface {
             //dashboard
             configPropertiesGenerator.setFilename("dashboard.json");
             this.dashboard = readConfigFileUseCase.readConfigFile(configPropertiesGenerator.getAppConfigPath());
-            this.whatsappService.setToken(this.dashboard.get("token").getAsString());
+            try {
+                this.whatsappService.setToken(this.dashboard.get("token").getAsString());
+            } catch (Exception e) {
+                this.whatsappService.setToken("");
+            }
 
             this.requestInterface.doRequest("https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&daily=temperature_2m_max,weather_code,wind_speed_10m_max,precipitation_probability_max,relative_humidity_2m_mean,precipitation_sum&forecast_days=14");
             return true;
@@ -125,7 +129,7 @@ public class GenerateReportUseCase implements RequestInterface {
         catch (Exception e) {
             System.out.println("use case error set path... new path: " + path);
             ErrorLogger.log(e);
-            throw  new RuntimeException(e);
+            throw new RuntimeException(e);
         }
 
         try {
@@ -133,6 +137,7 @@ public class GenerateReportUseCase implements RequestInterface {
             this.whatsappService.sendMessage();
         }
         catch (Exception e) {
+            System.out.println("except: " + e.getMessage());
             ErrorLogger.log(e);
         }
     }
